@@ -31,7 +31,7 @@ export default function Neighborhoods() {
 
                             return (
                                 <motion.div
-                                    key={neighborhood.id || neighborhood.slug || neighborhood.name}
+                                    key={neighborhood.id}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
