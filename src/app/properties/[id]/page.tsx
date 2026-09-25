@@ -213,7 +213,7 @@ export default function PropertyDetailPage() {
                             </h2>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
-                                {property.amenities.map((amenity) => (
+                                {property.amenities.map((amenity: string) => (
                                     <div
                                         key={amenity}
                                         className="flex items-center gap-3 text-gray-700 text-lg"
