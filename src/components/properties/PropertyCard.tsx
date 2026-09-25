@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Bed, Bath, Maximize, MapPin, Heart, ArrowUpRight } from "lucide-react";
-import { Property } from "@/lib/data";
+import { Property } from "@/types";
 import { motion } from "framer-motion";
 
 interface PropertyCardProps {
