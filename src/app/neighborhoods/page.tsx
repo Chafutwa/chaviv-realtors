@@ -1,89 +1,59 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import Image from "next/image";
-import { neighborhoods, properties } from "@/lib/data";
+import Link from "next/link";
+import { neighborhoods } from "@/lib/data";
 
-export default function NeighborhoodDetailPage() {
-    const params = useParams();
-    const slug = params?.slug as string;
-
-    const neighborhood = neighborhoods.find((n) => n.slug === slug);
-
-    if (!neighborhood) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <h1 className="text-xl font-semibold">Neighborhood Not Found</h1>
-            </div>
-        );
-    }
-
-    const filteredProperties = properties.filter(
-        (p) => p.neighborhood === slug
-    );
-
+export default function NeighborhoodsPage() {
     return (
         <div className="min-h-screen bg-[#F5F5F0]">
-            <div className="relative h-[50vh]">
-                <Image
-                    src={neighborhood.image}
-                    alt={neighborhood.name}
-                    fill
-                    priority
-                    className="object-cover"
-                />
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <h1 className="text-white text-4xl font-serif">
-                        {neighborhood.name}
+            <div className="max-w-7xl mx-auto px-6 py-16">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl md:text-5xl font-serif mb-4">
+                        Explore Neighborhoods
                     </h1>
-                </div>
-            </div>
 
-            <div className="max-w-5xl mx-auto py-12 px-6 text-center">
-                <p className="text-gray-700">
-                    {neighborhood.shortDescription}
-                </p>
-            </div>
-
-            <div className="max-w-6xl mx-auto px-6 pb-16">
-                <h2 className="text-2xl font-serif mb-6">
-                    Available Properties
-                </h2>
-
-                {filteredProperties.length === 0 ? (
-                    <p className="text-gray-600">
-                        No properties available in this area.
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+                        Discover properties across Nairobi&apos;s most sought-after
+                        neighborhoods.
                     </p>
-                ) : (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredProperties.map((property) => (
-                            <div
-                                key={property.id}
-                                className="bg-white rounded-lg overflow-hidden shadow"
-                            >
-                                <div className="relative w-full h-48">
-                                    <Image
-                                        src={property.image}
-                                        alt={property.title}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
-                                <div className="p-4">
-                                    <h3 className="font-semibold">
-                                        {property.title}
-                                    </h3>
-                                    <p className="text-sm text-gray-500">
-                                        {property.location}
-                                    </p>
-                                    <p className="text-[#C9A962] mt-2 font-medium">
-                                        {property.price}
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {neighborhoods.map((neighborhood) => (
+                        <Link
+                            key={neighborhood.id}
+                            href={`/properties?location=${encodeURIComponent(
+                                neighborhood.name
+                            )}`}
+                            className="group block"
+                        >
+                            <div className="relative h-80 overflow-hidden rounded-lg">
+                                <Image
+                                    src={neighborhood.image}
+                                    alt={neighborhood.name}
+                                    fill
+                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+
+                                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+
+                                <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                                    <h2 className="text-2xl font-serif">
+                                        {neighborhood.name}
+                                    </h2>
+
+                                    <p className="text-sm mt-1">
+                                        {neighborhood.propertyCount}{" "}
+                                        {neighborhood.propertyCount === 1
+                                            ? "Property"
+                                            : "Properties"}
                                     </p>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                )}
+                        </Link>
+                    ))}
+                </div>
             </div>
         </div>
     );
